@@ -29,7 +29,6 @@ func (s *Server) handleResponse(tag protocol.Tag, d protocol.Message, e error) {
 	protocol.Encode(s.RW, d)
 }
 
-// size[4] type[1] content[n]
 func (s *Server) Start() error {
 	for {
 		var (
