@@ -29,6 +29,7 @@ func (s *Server) handleResponse(tag protocol.Tag, d protocol.Message, e error) {
 	protocol.Encode(s.RW, d)
 }
 
+// Start starts the server loop
 func (s *Server) Start() error {
 	for {
 		var (
@@ -222,6 +223,8 @@ func (s *Server) Start() error {
 	}
 }
 
+// Serve serves a ReadWriter with the given handler. Serve does not return
+// unless an I/O error occurs.
 func Serve(rw io.ReadWriter, handler Handler) error {
 	s := Server{
 		Handler: handler,
@@ -235,6 +238,8 @@ func Serve(rw io.ReadWriter, handler Handler) error {
 	return err
 }
 
+// ServeListener accepts connections, calls the provided function to retrieve a
+// new handler, calling Serve with the connection and handler.
 func ServeListener(l net.Listener, handler func() Handler) error {
 	for {
 		conn, err := l.Accept()
