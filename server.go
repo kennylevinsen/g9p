@@ -8,7 +8,7 @@ import (
 	"github.com/joushou/g9p/protocol"
 )
 
-// Server serves a ReadWrite with a given handler.
+// Server serves a ReadWriter with a given handler.
 type Server struct {
 	Handler   Handler
 	RW        io.ReadWriter
