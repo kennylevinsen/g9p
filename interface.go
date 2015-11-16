@@ -26,14 +26,15 @@ var (
 // the request, but the user of a client is responsible for setting the initial
 // request tag. This could easily be taken care of by the client
 // implementation, but doing so would make it impossible for a user to know the
-// currently used tag, and thereby allow request for the request to be
-// cancelled with a Flush.
+// currently used tag, and thereby allow for the request to be cancelled with a
+// Flush.
 //
 // The docs for this interface can either be read as description of behaviour
 // from the side of a client, or the contract that a server must honour when
 // implementing the interface. The docs below try to explain the important
 // aspects of "high-level" behaviour, rather than the intricate details of the
-// protocol. For more info, see http://9p.cat-v.org/documentation/rfc
+// protocol. For more info, see http://man.cat-v.org/plan_9/5/intro as well as
+// the pages in http://man.cat-v.org/plan_9/5/
 type Handler interface {
 
 	// Version is part of the initial protocol negotiation. It must be the first
