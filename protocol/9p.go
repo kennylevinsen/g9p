@@ -13,6 +13,7 @@ import "io"
 // MessageType is the type of the contained message.
 type MessageType byte
 
+// IsRequest checks if a message type is a request or a response.
 func (m MessageType) IsRequest() bool {
 	return byte(m)%2 == 0
 }

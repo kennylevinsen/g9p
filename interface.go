@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	// ErrCancelled indicates that a request was flushed.
+	// ErrFlushed indicates that a request was flushed.
 	ErrFlushed = errors.New("request flushed")
 )
 

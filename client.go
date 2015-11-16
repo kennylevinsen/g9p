@@ -8,12 +8,14 @@ import (
 	"github.com/joushou/g9p/protocol"
 )
 
+// Errors
 var (
 	ErrTagInUse        = errors.New("tag already in use")
 	ErrNoSuchTag       = errors.New("tag does not exist")
 	ErrInvalidResponse = errors.New("invalid response")
 )
 
+// Client implements a 9P2000 client on a ReadWriter.
 type Client struct {
 	rw        io.ReadWriter
 	queueLock sync.RWMutex
@@ -22,6 +24,7 @@ type Client struct {
 	nextTag   protocol.Tag
 }
 
+// NextTag retrieves the next valid tag.
 func (c *Client) NextTag() protocol.Tag {
 	t := c.nextTag
 	c.nextTag++
@@ -250,6 +253,7 @@ func (c *Client) WriteStat(r *protocol.WriteStatRequest) (*protocol.WriteStatRes
 	return nil, ErrInvalidResponse
 }
 
+// Start starts serving the responses for the client.
 func (c *Client) Start() error {
 	defer func() {
 		if closer, ok := c.rw.(io.Closer); ok {
@@ -283,7 +287,9 @@ func (c *Client) Start() error {
 	}
 }
 
+// Stop stops a client.
 func (c *Client) Stop() {
+	// TODO(kl): Add more robust stop.
 	defer func() {
 		if closer, ok := c.rw.(io.Closer); ok {
 			closer.Close()
@@ -291,6 +297,7 @@ func (c *Client) Stop() {
 	}()
 }
 
+// NewClient returns a new client serving the provided ReadWriter.
 func NewClient(rw io.ReadWriter) *Client {
 	return &Client{
 		rw:    rw,

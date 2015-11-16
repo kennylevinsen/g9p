@@ -1,6 +1,8 @@
 package protocol
 
 const (
+	// HeaderSize is the overhead of the size and type fields of the 9P2000
+	// header.
 	HeaderSize = 4 + 1
 )
 
