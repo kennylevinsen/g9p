@@ -52,7 +52,7 @@ func MessageTypeToMessage(mt MessageType) (Message, error) {
 	case Tremove:
 		return &RemoveRequest{}, nil
 	case Rremove:
-		return &RemoveRequest{}, nil
+		return &RemoveResponse{}, nil
 	case Tstat:
 		return &StatRequest{}, nil
 	case Rstat:
