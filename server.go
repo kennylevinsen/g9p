@@ -93,14 +93,17 @@ func (s *Server) Start() error {
 			if err = r.Decode(limiter); err != nil {
 				return err
 			}
-			go func(r *protocol.FlushRequest) {
-				tag := r.Tag
-				res, err := s.Handler.Flush(r)
-				if res != nil {
-					res.Tag = tag
-				}
-				s.handleResponse(tag, res, err)
-			}(r)
+
+			// FlushRequest is not handled concurrently to ensure the sequential
+			// behaviour the spec demands
+			//go func(r *protocol.FlushRequest) {
+			tag := r.Tag
+			res, err := s.Handler.Flush(r)
+			if res != nil {
+				res.Tag = tag
+			}
+			s.handleResponse(tag, res, err)
+			//}(r)
 		case protocol.Twalk:
 			r := &protocol.WalkRequest{}
 			if err = r.Decode(limiter); err != nil {
