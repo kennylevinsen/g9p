@@ -58,12 +58,7 @@ func (c *Client) handleResponse(d protocol.Message) error {
 	return ErrNoSuchTag
 }
 
-func (c *Client) send(d protocol.Message) (protocol.Message, error) {
-	t := d.GetTag()
-	ch, err := c.getTag(t)
-	if err != nil {
-		return nil, err
-	}
+func (c *Client) write(t protocol.Tag, d protocol.Message) error {
 	c.writeLock.Lock()
 	defer c.writeLock.Unlock()
 
@@ -72,9 +67,18 @@ func (c *Client) send(d protocol.Message) (protocol.Message, error) {
 			delete(c.queue, t)
 
 		}
+		return err
+	}
+	return nil
+}
+
+func (c *Client) send(d protocol.Message) (protocol.Message, error) {
+	t := d.GetTag()
+	ch, err := c.getTag(t)
+	if err != nil {
 		return nil, err
 	}
-
+	c.write(t, d)
 	resp := <-ch
 	if resp == nil {
 		return nil, ErrFlushed
