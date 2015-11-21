@@ -171,9 +171,9 @@ func TestReencode(t *testing.T) {
 			&WalkResponse{
 				Tag: 45,
 				Qids: []Qid{
-					Qid{},
-					Qid{},
-					Qid{},
+					{},
+					{},
+					{},
 				},
 			},
 		}, {
