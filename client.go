@@ -98,6 +98,8 @@ func (c *Client) flush(t protocol.Tag) {
 		delete(c.queue, t)
 	}
 }
+
+// Version performs the protocol handshake.
 func (c *Client) Version(r *protocol.VersionRequest) (*protocol.VersionResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -110,6 +112,7 @@ func (c *Client) Version(r *protocol.VersionRequest) (*protocol.VersionResponse,
 	return nil, ErrInvalidResponse
 }
 
+// Auth retrieves the fid for authentication.
 func (c *Client) Auth(r *protocol.AuthRequest) (*protocol.AuthResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -122,6 +125,7 @@ func (c *Client) Auth(r *protocol.AuthRequest) (*protocol.AuthResponse, error) {
 	return nil, ErrInvalidResponse
 }
 
+// Attach connects to the root node of a service.
 func (c *Client) Attach(r *protocol.AttachRequest) (*protocol.AttachResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -134,6 +138,7 @@ func (c *Client) Attach(r *protocol.AttachRequest) (*protocol.AttachResponse, er
 	return nil, ErrInvalidResponse
 }
 
+// Flush flushes a previous request.
 func (c *Client) Flush(r *protocol.FlushRequest) (*protocol.FlushResponse, error) {
 	// TODO(kl): Handle of multiple flushes on a single request.
 	t := r.OldTag
@@ -149,6 +154,7 @@ func (c *Client) Flush(r *protocol.FlushRequest) (*protocol.FlushResponse, error
 	return nil, ErrInvalidResponse
 }
 
+// Walk navigates to a new file from the current fid.
 func (c *Client) Walk(r *protocol.WalkRequest) (*protocol.WalkResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -161,6 +167,7 @@ func (c *Client) Walk(r *protocol.WalkRequest) (*protocol.WalkResponse, error) {
 	return nil, ErrInvalidResponse
 }
 
+// Open opens the current file according to provided parameters.
 func (c *Client) Open(r *protocol.OpenRequest) (*protocol.OpenResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -173,6 +180,7 @@ func (c *Client) Open(r *protocol.OpenRequest) (*protocol.OpenResponse, error) {
 	return nil, ErrInvalidResponse
 }
 
+// Create creates and opens a file according to provided parameters.
 func (c *Client) Create(r *protocol.CreateRequest) (*protocol.CreateResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -185,6 +193,7 @@ func (c *Client) Create(r *protocol.CreateRequest) (*protocol.CreateResponse, er
 	return nil, ErrInvalidResponse
 }
 
+// Read reads from a file, which must be open in a readable mode.
 func (c *Client) Read(r *protocol.ReadRequest) (*protocol.ReadResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -197,6 +206,7 @@ func (c *Client) Read(r *protocol.ReadRequest) (*protocol.ReadResponse, error) {
 	return nil, ErrInvalidResponse
 }
 
+// Write writes to a file, which must be open in a writable mode.
 func (c *Client) Write(r *protocol.WriteRequest) (*protocol.WriteResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -209,6 +219,7 @@ func (c *Client) Write(r *protocol.WriteRequest) (*protocol.WriteResponse, error
 	return nil, ErrInvalidResponse
 }
 
+// Clunk terminates a fid.
 func (c *Client) Clunk(r *protocol.ClunkRequest) (*protocol.ClunkResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -221,6 +232,7 @@ func (c *Client) Clunk(r *protocol.ClunkRequest) (*protocol.ClunkResponse, error
 	return nil, ErrInvalidResponse
 }
 
+// Remove terminates a fid and removes the file if possible.
 func (c *Client) Remove(r *protocol.RemoveRequest) (*protocol.RemoveResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -233,6 +245,7 @@ func (c *Client) Remove(r *protocol.RemoveRequest) (*protocol.RemoveResponse, er
 	return nil, ErrInvalidResponse
 }
 
+// Stat returns the stat structure of the file.
 func (c *Client) Stat(r *protocol.StatRequest) (*protocol.StatResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
@@ -245,6 +258,7 @@ func (c *Client) Stat(r *protocol.StatRequest) (*protocol.StatResponse, error) {
 	return nil, ErrInvalidResponse
 }
 
+// WriteStat updates the stat structure of the file.
 func (c *Client) WriteStat(r *protocol.WriteStatRequest) (*protocol.WriteStatResponse, error) {
 	resp, err := c.send(r)
 	if err != nil {
