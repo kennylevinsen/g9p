@@ -5,7 +5,7 @@ import (
 	"net"
 	"sync"
 
-	"github.com/joushou/g9p/protocol"
+	"github.com/kennylevinsen/g9p/protocol"
 )
 
 // Server serves a ReadWriter with a given handler.
